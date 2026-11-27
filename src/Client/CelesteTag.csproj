@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <CelesteDir Condition="'$(CelesteDir)' == ''">$(CELESTE_DIR)</CelesteDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Shared/TagWire.cs" Link="TagWire.cs" />
+    <Reference Include="Celeste" HintPath="$(CelesteDir)/Celeste.dll" Private="false" />
+    <Reference Include="FNA" HintPath="$(CelesteDir)/FNA.dll" Private="false" />
+    <Reference Include="MMHOOK_Celeste" HintPath="$(CelesteDir)/MMHOOK_Celeste.dll" Private="false" />
+  </ItemGroup>
+  <Target Name="CheckGameReferences" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(CelesteDir)/Celeste.dll') Or !Exists('$(CelesteDir)/MMHOOK_Celeste.dll')"
+           Text="Set CELESTE_DIR to your Everest installation and launch Everest once to generate its hook assembly." />
+  </Target>
+</Project>
